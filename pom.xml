@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>bless-my-soul-backend</groupId>
-	<artifactId>rest</artifactId>
+	<artifactId>bless-my-soul-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>rest</name>
+	<name>Bless My Soul Backend</name>
 	<description>Backend for Bless My Soul</description>
 	<properties>
 		<java.version>16</java.version>
