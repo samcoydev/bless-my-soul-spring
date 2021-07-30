@@ -6,11 +6,14 @@ import blessmysoulbackend.rest.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.Table;
 import javax.validation.Valid;
 import java.util.List;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("api/v1/item")
+@Table(name = "items")
 public class ItemController {
 
     @Autowired
