@@ -25,10 +25,28 @@ public class ItemController {
         return itemService.findAll();
     }
 
+    @GetMapping("/{id}")
+    public Item getItemByID(@PathVariable Long id) {
+        System.out.println("[GET] Item with ID: " + id);
+        return itemService.findById(id);
+    }
+
     @PostMapping
     public Item saveItem(@Valid @RequestBody ItemDto item) {
         System.out.println("[POST] " + item.getName());
         return itemService.save(item);
+    }
+
+    @PutMapping("/{id}")
+    public Item updateItem(@Valid @RequestBody ItemDto item, @PathVariable Long id) {
+        System.out.println("[PUT] " + item.getName());
+        return itemService.update(id, item);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteItem(@PathVariable Long id) {
+        System.out.println("[DELETE] Item: " + id);
+        itemService.delete(id);
     }
 
 }
