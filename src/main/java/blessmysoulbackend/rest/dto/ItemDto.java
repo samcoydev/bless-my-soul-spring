@@ -1,5 +1,7 @@
 package blessmysoulbackend.rest.dto;
 
+import blessmysoulbackend.rest.helpers.StateType;
+
 import javax.validation.constraints.NotNull;
 
 public class ItemDto {
@@ -12,6 +14,8 @@ public class ItemDto {
     private float price;
 
     private String description;
+
+    private StateType state;
 
     public long getId() {
         return id;
@@ -43,6 +47,14 @@ public class ItemDto {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public StateType getState() {
+        return state;
+    }
+
+    public void setState(StateType state) {
+        this.state = state;
     }
 
     @Override

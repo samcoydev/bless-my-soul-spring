@@ -1,5 +1,6 @@
 package blessmysoulbackend.rest.model;
 
+import blessmysoulbackend.rest.helpers.RoleType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -27,7 +28,8 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    //TODO: Add Role
+    @Column(name = "role")
+    private RoleType role;
 
     public User() { }
 
@@ -80,6 +82,14 @@ public class User {
         this.email = email;
     }
 
+    public RoleType getRole() {
+        return role;
+    }
+
+    public void setRole(RoleType role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -89,6 +99,8 @@ public class User {
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", email='" + email + '\'' +
+                ", role=" + role +
                 '}';
     }
+
 }

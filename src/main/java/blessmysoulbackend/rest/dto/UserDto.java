@@ -1,5 +1,6 @@
 package blessmysoulbackend.rest.dto;
 
+import blessmysoulbackend.rest.helpers.RoleType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -24,7 +25,7 @@ public class UserDto {
     @NotNull(message = "Email cannot be empty")
     private String email;
 
-    private String role;
+    private RoleType role;
 
     private String token;
 
@@ -85,6 +86,7 @@ public class UserDto {
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }

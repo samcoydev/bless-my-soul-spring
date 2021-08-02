@@ -39,6 +39,7 @@ public class ItemServiceImpl implements ItemService {
         newItem.setName(item.getName());
         newItem.setPrice(item.getPrice());
         newItem.setDescription(item.getDescription());
+        newItem.setState(item.getState());
 
         itemDao.save(newItem);
 
@@ -52,6 +53,7 @@ public class ItemServiceImpl implements ItemService {
             existingItem.setName(item.getName());
             existingItem.setPrice(item.getPrice());
             existingItem.setDescription(item.getDescription());
+            existingItem.setState(item.getState());
 
             return itemDao.save(existingItem);
         } else {

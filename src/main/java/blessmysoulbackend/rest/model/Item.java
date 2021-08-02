@@ -1,5 +1,6 @@
 package blessmysoulbackend.rest.model;
 
+import blessmysoulbackend.rest.helpers.StateType;
 
 import javax.persistence.*;
 
@@ -17,7 +18,8 @@ public class Item {
 
     private String description;
 
-    // TODO: Add state
+    @Column(name="state")
+    private StateType state;
 
     public Item() { }
 
@@ -57,6 +59,14 @@ public class Item {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public StateType getState() {
+        return state;
+    }
+
+    public void setState(StateType state) {
+        this.state = state;
     }
 
     @Override

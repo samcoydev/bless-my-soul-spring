@@ -1,5 +1,6 @@
 package blessmysoulbackend.rest.service.impl;
 
+import blessmysoulbackend.rest.helpers.RoleType;
 import org.apache.commons.lang3.StringUtils;
 import blessmysoulbackend.rest.dao.UserDao;
 import blessmysoulbackend.rest.dto.UserDto;
@@ -51,6 +52,7 @@ public class UserServiceImpl implements UserService {
         newUser.setFirstname(user.getFirstname());
         newUser.setLastname(user.getLastname());
         newUser.setEmail(user.getEmail());
+        newUser.setRole(RoleType.USER);
 
         return userDao.save(newUser);
     }
