@@ -14,5 +14,4 @@ public enum StateType {
     private String getState() {
         return this.state;
     }
-
 }

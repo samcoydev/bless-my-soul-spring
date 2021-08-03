@@ -1,9 +1,6 @@
 package blessmysoulbackend.rest.dto;
 
 import blessmysoulbackend.rest.helpers.RoleType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import javax.validation.constraints.NotNull;
 
 public class UserDto {
@@ -86,7 +83,8 @@ public class UserDto {
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", email='" + email + '\'' +
-                ", role='" + role + '\'' +
+                ", role=" + role +
+                ", token='" + token + '\'' +
                 '}';
     }
 }

@@ -1,7 +1,6 @@
 package blessmysoulbackend.rest.model;
 
 import blessmysoulbackend.rest.helpers.StateType;
-
 import javax.persistence.*;
 
 @Entity
@@ -12,10 +11,13 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "price")
     private float price;
 
+    @Column(name = "description")
     private String description;
 
     @Column(name="state")
@@ -76,6 +78,7 @@ public class Item {
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +
+                ", state=" + state +
                 '}';
     }
 }

@@ -1,7 +1,6 @@
 package blessmysoulbackend.rest.dto;
 
 import blessmysoulbackend.rest.helpers.StateType;
-
 import javax.validation.constraints.NotNull;
 
 public class ItemDto {
@@ -64,6 +63,7 @@ public class ItemDto {
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", description='" + description + '\'' +
+                ", state=" + state +
                 '}';
     }
 }

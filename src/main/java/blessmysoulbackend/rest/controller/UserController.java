@@ -1,7 +1,6 @@
 package blessmysoulbackend.rest.controller;
 
 import blessmysoulbackend.rest.dto.UserDto;
-import blessmysoulbackend.rest.model.Item;
 import blessmysoulbackend.rest.model.User;
 import blessmysoulbackend.rest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("api/v1/users")
+@RequestMapping("api/v1/user")
 @Table(name = "users")
 public class UserController {
 

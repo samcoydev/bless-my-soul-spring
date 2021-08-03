@@ -2,7 +2,6 @@ package blessmysoulbackend.rest.model;
 
 import blessmysoulbackend.rest.helpers.RoleType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
 @Entity
@@ -102,5 +101,4 @@ public class User {
                 ", role=" + role +
                 '}';
     }
-
 }
