@@ -24,12 +24,6 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void delete(long id) {
-        Item item = itemDao.findById(id).get();
-        itemDao.delete(item);
-    }
-
-    @Override
     public Item findById(Long id) {
         return itemDao.findById(id).get();
     }
@@ -59,6 +53,12 @@ public class ItemServiceImpl implements ItemService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public void delete(long id) {
+        Item item = itemDao.findById(id).get();
+        itemDao.delete(item);
     }
 
 }

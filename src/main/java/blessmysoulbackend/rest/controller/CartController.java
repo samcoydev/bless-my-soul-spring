@@ -27,12 +27,24 @@ public class CartController {
 
     @PostMapping
     public CartItem saveCartItem(@Valid @RequestBody CartDto cartItem) {
-        System.out.println("[POST] cart item with an ID of: " + cartItem.getId());
+        System.out.println("[POST] Cart Item with an ID of: " + cartItem.getId());
         List<CartItem> existingCartItems = cartService.findCartItemsWithSameUserIDAndItemID(cartItem.getUserID(), cartItem.getItemID());
-        if (!existingCartItems.isEmpty())
-            return cartService.updateQty(existingCartItems.get(0).getId(), cartItem);
-
+        if (!existingCartItems.isEmpty()) {
+            System.out.println("[POST] Cart Item already exists, increasing quantity by one: " + cartItem.getId());
+            return cartService.updateQty(existingCartItems.get(0).getId(), cartItem, existingCartItems.get(0).getQty() + 1);
+        }
         return cartService.save(cartItem);
     }
 
+    @PutMapping("/{id}")
+    public CartItem updateCartItem(@PathVariable Long id, @Valid @RequestBody CartDto cartItem) {
+        System.out.println("[PUT] Update Cart Item -NOTE: Server can only update an items quantity-: " + cartItem.getId());
+        return cartService.updateQty(id, cartItem, cartItem.getQty());
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteItem(@PathVariable Long id) {
+        System.out.println("[DELETE] Cart Item: " + id);
+        cartService.delete(id);
+    }
 }

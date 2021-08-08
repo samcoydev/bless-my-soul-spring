@@ -27,11 +27,6 @@ public class UserServiceImpl implements UserService {
         userDao.findByOrderById().iterator().forEachRemaining(list::add);
         return list;
     }
-    @Override
-    public void delete(long id) {
-        User user = userDao.findById(id).get();
-        userDao.delete(user);
-    }
 
     @Override
     public User findById(Long id) {
@@ -75,5 +70,11 @@ public class UserServiceImpl implements UserService {
             System.out.println("[AUTHENTICATE] Passwords don't match!");
             return null;
         }
+    }
+
+    @Override
+    public void delete(long id) {
+        User user = userDao.findById(id).get();
+        userDao.delete(user);
     }
 }

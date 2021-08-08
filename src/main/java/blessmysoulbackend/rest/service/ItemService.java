@@ -9,9 +9,9 @@ public interface ItemService {
 
     Item save(ItemDto item);
     Item update(long id, ItemDto item);
+    void delete(long id);
 
     List<Item> findAll();
-    void delete(long id);
 
     Item findById(Long id);
 

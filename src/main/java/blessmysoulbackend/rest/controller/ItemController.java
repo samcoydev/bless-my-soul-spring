@@ -38,7 +38,7 @@ public class ItemController {
     }
 
     @PutMapping("/{id}")
-    public Item updateItem(@Valid @RequestBody ItemDto item, @PathVariable Long id) {
+    public Item updateItem(@PathVariable Long id, @Valid @RequestBody ItemDto item) {
         System.out.println("[PUT] " + item.getName());
         return itemService.update(id, item);
     }

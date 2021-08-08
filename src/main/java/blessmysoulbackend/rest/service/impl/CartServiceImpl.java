@@ -2,6 +2,7 @@ package blessmysoulbackend.rest.service.impl;
 
 import blessmysoulbackend.rest.dao.CartDao;
 import blessmysoulbackend.rest.dto.CartDto;
+import blessmysoulbackend.rest.dto.ItemDto;
 import blessmysoulbackend.rest.model.CartItem;
 import blessmysoulbackend.rest.model.Item;
 import blessmysoulbackend.rest.service.CartService;
@@ -37,6 +38,13 @@ public class CartServiceImpl implements CartService {
         });
         return cartItemList;
     }
+
+    public List<CartItem> findCartItemsWithSameUserIDAndItemID(long userID, long itemID) {
+        List<CartItem> itemIDFilteredList = findCartItemsByItemID(itemID);
+        itemIDFilteredList.retainAll(findCartItemsByUserID(userID));
+        return new ArrayList<>(itemIDFilteredList);
+    }
+
     public CartItem save(CartDto cartItem) {
         CartItem newCartItem = new CartItem();
         newCartItem.setItemID(cartItem.getItemID());
@@ -48,11 +56,11 @@ public class CartServiceImpl implements CartService {
         return cartDao.save(newCartItem);
     }
 
-    public CartItem updateQty(long id, CartDto cartDto) {
+    public CartItem updateQty(long id, CartDto cartDto, float qtyIncrease) {
         Optional<CartItem> optionalCartItem = cartDao.findById(id);
         if (optionalCartItem.isPresent()) {
             CartItem existingCartItem = optionalCartItem.get();
-            existingCartItem.setQty(cartDto.getQty() + 1);
+            existingCartItem.setQty(qtyIncrease);
 
             return cartDao.save(existingCartItem);
         } else {
@@ -60,10 +68,10 @@ public class CartServiceImpl implements CartService {
         }
     }
 
-    public List<CartItem> findCartItemsWithSameUserIDAndItemID(long userID, long itemID) {
-        List<CartItem> itemIDFilteredList = findCartItemsByItemID(itemID);
-        itemIDFilteredList.retainAll(findCartItemsByUserID(userID));
-        return new ArrayList<>(itemIDFilteredList);
+    @Override
+    public void delete(long id) {
+        CartItem cartItem = cartDao.findById(id).get();
+        cartDao.delete(cartItem);
     }
 
 }
