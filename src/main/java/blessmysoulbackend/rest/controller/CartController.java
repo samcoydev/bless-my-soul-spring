@@ -20,14 +20,18 @@ public class CartController {
     private CartService cartService;
 
     @GetMapping("/{id}")
-    public List<CartItem> getCartItemsByUserId(@PathVariable Long id) {
+    public List<CartItem> getCartItemsByUserID(@PathVariable Long id) {
         System.out.println("[GET] All cart items for user with id: " + id);
-        return cartService.findCartItemsByUserId(id);
+        return cartService.findCartItemsByUserID(id);
     }
 
     @PostMapping
     public CartItem saveCartItem(@Valid @RequestBody CartDto cartItem) {
-        System.out.println("[POST] " + cartItem.getName());
+        System.out.println("[POST] cart item with an ID of: " + cartItem.getId());
+        List<CartItem> existingCartItems = cartService.findCartItemsWithSameUserIDAndItemID(cartItem.getUserID(), cartItem.getItemID());
+        if (!existingCartItems.isEmpty())
+            return cartService.updateQty(existingCartItems.get(0).getId(), cartItem);
+
         return cartService.save(cartItem);
     }
 

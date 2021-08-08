@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service(value = "cartService")
 public class CartServiceImpl implements CartService {
@@ -18,20 +19,26 @@ public class CartServiceImpl implements CartService {
     CartDao cartDao;
 
     @Override
-    public List<CartItem> findCartItemsByUserId(Long userId) {
+    public List<CartItem> findCartItemsByUserID(Long userID) {
         List<CartItem> cartItemList = new ArrayList<>();
-
         cartDao.findByOrderById().iterator().forEachRemaining(cartItem -> {
-            if (cartItem.getUserID() == userId)
+            if (cartItem.getUserID() == userID)
                 cartItemList.add(cartItem);
         });
-
         return cartItemList;
     }
 
+    @Override
+    public List<CartItem> findCartItemsByItemID(Long itemID) {
+        List<CartItem> cartItemList = new ArrayList<>();
+        cartDao.findByOrderById().iterator().forEachRemaining(cartItem -> {
+            if (cartItem.getItemID() == itemID)
+                cartItemList.add(cartItem);
+        });
+        return cartItemList;
+    }
     public CartItem save(CartDto cartItem) {
         CartItem newCartItem = new CartItem();
-        newCartItem.setName(cartItem.getName());
         newCartItem.setItemID(cartItem.getItemID());
         newCartItem.setUserID(cartItem.getUserID());
         newCartItem.setQty(cartItem.getQty());
@@ -39,6 +46,24 @@ public class CartServiceImpl implements CartService {
         cartDao.save(newCartItem);
 
         return cartDao.save(newCartItem);
+    }
+
+    public CartItem updateQty(long id, CartDto cartDto) {
+        Optional<CartItem> optionalCartItem = cartDao.findById(id);
+        if (optionalCartItem.isPresent()) {
+            CartItem existingCartItem = optionalCartItem.get();
+            existingCartItem.setQty(cartDto.getQty() + 1);
+
+            return cartDao.save(existingCartItem);
+        } else {
+            return null;
+        }
+    }
+
+    public List<CartItem> findCartItemsWithSameUserIDAndItemID(long userID, long itemID) {
+        List<CartItem> itemIDFilteredList = findCartItemsByItemID(itemID);
+        itemIDFilteredList.retainAll(findCartItemsByUserID(userID));
+        return new ArrayList<>(itemIDFilteredList);
     }
 
 }

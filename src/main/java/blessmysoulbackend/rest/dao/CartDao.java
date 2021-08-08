@@ -1,7 +1,6 @@
 package blessmysoulbackend.rest.dao;
 
 import blessmysoulbackend.rest.model.CartItem;
-import blessmysoulbackend.rest.model.Item;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +12,6 @@ public interface CartDao extends CrudRepository<CartItem, Long> {
 
     Set<CartItem> findByOrderById();
 
-    Optional<CartItem> findCartItemsByUserId(Long id);
+    Optional<CartItem> findCartItemsByUserID(Long userID);
 
 }

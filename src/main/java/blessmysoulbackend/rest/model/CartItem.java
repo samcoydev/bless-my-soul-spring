@@ -10,9 +10,6 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name="name")
-    private String name;
-
     @Column(name="item_id")
     private int itemID;
 
@@ -24,8 +21,7 @@ public class CartItem {
 
     public CartItem() { }
 
-    CartItem(String name, int itemID, int userID, float qty) {
-        this.name = name;
+    CartItem(int itemID, int userID, float qty) {
         this.itemID = itemID;
         this.userID = userID;
         this.qty = qty;
@@ -37,14 +33,6 @@ public class CartItem {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getItemID() {
@@ -75,7 +63,6 @@ public class CartItem {
     public String toString() {
         return "CartItem{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
                 ", itemID=" + itemID +
                 ", userID=" + userID +
                 ", qty=" + qty +

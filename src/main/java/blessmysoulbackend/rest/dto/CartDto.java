@@ -6,9 +6,6 @@ public class CartDto {
 
     private long id;
 
-    @NotNull(message="Name cannot be empty.")
-    private String name;
-
     @NotNull(message="Item ID cannot be empty.")
     private int itemID;
 
@@ -24,14 +21,6 @@ public class CartDto {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getItemID() {
@@ -62,7 +51,6 @@ public class CartDto {
     public String toString() {
         return "CartDto{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
                 ", itemID=" + itemID +
                 ", userID=" + userID +
                 ", qty=" + qty +

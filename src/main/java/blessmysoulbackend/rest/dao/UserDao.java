@@ -1,6 +1,5 @@
 package blessmysoulbackend.rest.dao;
 
-import blessmysoulbackend.rest.model.Item;
 import blessmysoulbackend.rest.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
