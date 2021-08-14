@@ -1,30 +1,31 @@
 package blessmysoulbackend.rest.model;
 
+import blessmysoulbackend.rest.helpers.OrderType;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "cart_items")
+@Table(name = "orders")
 @Data
-public class CartItem {
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne
-    private Item item;
-
-    @ManyToOne
     private User user;
 
-    @Column(name="qty")
-    private float qty;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<CartItem> cartItems;
 
-    @ManyToOne
-    private Order order;
+    private String notes;
+
+    @Column(name="state")
+    private OrderType state;
 
 }

@@ -8,7 +8,7 @@ import java.util.List;
 public interface CartService {
 
     CartItem save(CartDto cartItem);
-    CartItem updateQty(long id, CartDto cartDto, float qtyIncrease);
+    CartItem updateQty(long id, float qtyIncrease);
     void delete(long id);
 
     List<CartItem> findCartItemsByUserID(Long userID);

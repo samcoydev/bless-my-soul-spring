@@ -5,6 +5,7 @@ import blessmysoulbackend.rest.dto.CartDto;
 import blessmysoulbackend.rest.dto.ItemDto;
 import blessmysoulbackend.rest.model.CartItem;
 import blessmysoulbackend.rest.model.Item;
+import blessmysoulbackend.rest.model.Order;
 import blessmysoulbackend.rest.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,7 +57,7 @@ public class CartServiceImpl implements CartService {
         return cartDao.save(newCartItem);
     }
 
-    public CartItem updateQty(long id, CartDto cartDto, float qtyIncrease) {
+    public CartItem updateQty(long id, float qtyIncrease) {
         Optional<CartItem> optionalCartItem = cartDao.findById(id);
         if (optionalCartItem.isPresent()) {
             CartItem existingCartItem = optionalCartItem.get();
