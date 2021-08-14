@@ -29,7 +29,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    @CacheEvict(cacheNames = { "evaluations"}, allEntries=true)
+    @CacheEvict(cacheNames = { "items"}, allEntries=true)
     public void delete(long id) {
         Item item = itemDao.findById(id).get();
         itemDao.delete(item);
@@ -41,7 +41,7 @@ public class ItemServiceImpl implements ItemService {
         return itemDao.findById(id).get();
     }
 
-    @CachePut(cacheNames = { "evaluations"})
+    @CachePut(cacheNames = { "items"})
     public Item save(ItemDto item) {
         Item newItem = new Item();
         newItem.setName(item.getName());
@@ -54,7 +54,7 @@ public class ItemServiceImpl implements ItemService {
         return itemDao.save(newItem);
     }
 
-    @CacheEvict(cacheNames = { "evaluations"}, allEntries=true)
+    @CacheEvict(cacheNames = { "items"}, allEntries=true)
     public Item update(long id, ItemDto item) {
         Optional<Item> optionalItem = itemDao.findById(id);
         if (optionalItem.isPresent()) {
