@@ -10,20 +10,20 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name="item_id")
-    private int itemID;
+    @ManyToOne
+    private Item item;
 
-    @Column(name="user_id")
-    private int userID;
+    @ManyToOne
+    private User user;
 
     @Column(name="qty")
     private float qty;
 
     public CartItem() { }
 
-    CartItem(int itemID, int userID, float qty) {
-        this.itemID = itemID;
-        this.userID = userID;
+    CartItem(Item item, User user, float qty) {
+        this.item = item;
+        this.user = user;
         this.qty = qty;
     }
 
@@ -35,20 +35,20 @@ public class CartItem {
         this.id = id;
     }
 
-    public int getItemID() {
-        return itemID;
+    public Item getItem() {
+        return item;
     }
 
-    public void setItemID(int itemID) {
-        this.itemID = itemID;
+    public void setItem(Item item) {
+        this.item = item;
     }
 
-    public int getUserID() {
-        return userID;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public float getQty() {
@@ -63,8 +63,8 @@ public class CartItem {
     public String toString() {
         return "CartItem{" +
                 "id=" + id +
-                ", itemID=" + itemID +
-                ", userID=" + userID +
+                ", item=" + item +
+                ", user=" + user +
                 ", qty=" + qty +
                 '}';
     }

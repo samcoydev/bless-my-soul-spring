@@ -1,16 +1,19 @@
 package blessmysoulbackend.rest.dto;
 
+import blessmysoulbackend.rest.model.Item;
+import blessmysoulbackend.rest.model.User;
+
 import javax.validation.constraints.NotNull;
 
 public class CartDto {
 
     private long id;
 
-    @NotNull(message="Item ID cannot be empty.")
-    private int itemID;
+    @NotNull(message="Item cannot be empty.")
+    private Item item;
 
-    @NotNull(message="User ID cannot be empty.")
-    private int userID;
+    @NotNull(message="User cannot be empty.")
+    private User user;
 
     @NotNull(message="Quantity cannot be empty.")
     private float qty;
@@ -23,20 +26,20 @@ public class CartDto {
         this.id = id;
     }
 
-    public int getItemID() {
-        return itemID;
+    public Item getItem() {
+        return item;
     }
 
-    public void setItemID(int itemID) {
-        this.itemID = itemID;
+    public void setItem(Item item) {
+        this.item = item;
     }
 
-    public int getUserID() {
-        return userID;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public float getQty() {
@@ -51,8 +54,8 @@ public class CartDto {
     public String toString() {
         return "CartDto{" +
                 "id=" + id +
-                ", itemID=" + itemID +
-                ", userID=" + userID +
+                ", item=" + item +
+                ", user=" + user +
                 ", qty=" + qty +
                 '}';
     }

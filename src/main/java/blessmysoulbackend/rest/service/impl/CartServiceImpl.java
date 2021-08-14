@@ -23,7 +23,7 @@ public class CartServiceImpl implements CartService {
     public List<CartItem> findCartItemsByUserID(Long userID) {
         List<CartItem> cartItemList = new ArrayList<>();
         cartDao.findByOrderById().iterator().forEachRemaining(cartItem -> {
-            if (cartItem.getUserID() == userID)
+            if (cartItem.getUser().getId() == userID)
                 cartItemList.add(cartItem);
         });
         return cartItemList;
@@ -33,7 +33,7 @@ public class CartServiceImpl implements CartService {
     public List<CartItem> findCartItemsByItemID(Long itemID) {
         List<CartItem> cartItemList = new ArrayList<>();
         cartDao.findByOrderById().iterator().forEachRemaining(cartItem -> {
-            if (cartItem.getItemID() == itemID)
+            if (cartItem.getItem().getId() == itemID)
                 cartItemList.add(cartItem);
         });
         return cartItemList;
@@ -47,8 +47,8 @@ public class CartServiceImpl implements CartService {
 
     public CartItem save(CartDto cartItem) {
         CartItem newCartItem = new CartItem();
-        newCartItem.setItemID(cartItem.getItemID());
-        newCartItem.setUserID(cartItem.getUserID());
+        newCartItem.setItem(cartItem.getItem());
+        newCartItem.setUser(cartItem.getUser());
         newCartItem.setQty(cartItem.getQty());
 
         cartDao.save(newCartItem);

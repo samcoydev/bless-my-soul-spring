@@ -13,7 +13,6 @@ import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("api/v1/cart")
-@Table(name = "cart_items")
 public class CartController {
 
     @Autowired
@@ -28,7 +27,7 @@ public class CartController {
     @PostMapping
     public CartItem saveCartItem(@Valid @RequestBody CartDto cartItem) {
         System.out.println("[POST] Cart Item with an ID of: " + cartItem.getId());
-        List<CartItem> existingCartItems = cartService.findCartItemsWithSameUserIDAndItemID(cartItem.getUserID(), cartItem.getItemID());
+        List<CartItem> existingCartItems = cartService.findCartItemsWithSameUserIDAndItemID(cartItem.getUser().getId(), cartItem.getItem().getId());
         if (!existingCartItems.isEmpty()) {
             System.out.println("[POST] Cart Item already exists, increasing quantity by one: " + cartItem.getId());
             return cartService.updateQty(existingCartItems.get(0).getId(), cartItem, existingCartItems.get(0).getQty() + 1);

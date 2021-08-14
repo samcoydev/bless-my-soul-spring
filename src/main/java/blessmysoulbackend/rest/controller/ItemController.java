@@ -13,7 +13,6 @@ import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("api/v1/item")
-@Table(name = "items")
 public class ItemController {
 
     @Autowired
