@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
         userDao.findByOrderById().iterator().forEachRemaining(list::add);
         return list;
     }
+    
     @Override
     public void delete(long id) {
         User user = userDao.findById(id).get();

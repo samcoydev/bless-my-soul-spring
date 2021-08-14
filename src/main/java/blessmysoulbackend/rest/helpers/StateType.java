@@ -11,7 +11,7 @@ public enum StateType {
         this.state = state;
     }
 
-    private String getState() {
+    public String getState() {
         return this.state;
     }
 }

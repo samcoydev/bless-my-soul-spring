@@ -1,12 +1,12 @@
 package blessmysoulbackend.rest.dao;
 
-import blessmysoulbackend.rest.model.Item;
-import blessmysoulbackend.rest.model.User;
+import java.util.Optional;
+import java.util.Set;
+
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-import java.util.Set;
+import blessmysoulbackend.rest.model.User;
 
 @Repository
 public interface UserDao extends CrudRepository<User, Long> {

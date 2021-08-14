@@ -1,10 +1,9 @@
 package blessmysoulbackend.rest.service;
 
+import java.util.List;
+
 import blessmysoulbackend.rest.dto.UserDto;
 import blessmysoulbackend.rest.model.User;
-
-import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
 
