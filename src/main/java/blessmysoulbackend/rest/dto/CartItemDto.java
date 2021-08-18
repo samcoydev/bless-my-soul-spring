@@ -8,7 +8,7 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class CartDto {
+public class CartItemDto {
 
     private long id;
 
@@ -21,6 +21,7 @@ public class CartDto {
     @NotNull(message="Quantity cannot be empty.")
     private float qty;
 
-    private Order order;
+    @NotNull(message="Attached to order mush have a value.")
+    private boolean attachedToOrder;
 
 }

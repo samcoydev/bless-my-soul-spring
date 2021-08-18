@@ -1,8 +1,6 @@
 package blessmysoulbackend.rest.model;
 
 import lombok.Data;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -24,7 +22,6 @@ public class CartItem {
     @Column(name="qty")
     private float qty;
 
-    @ManyToOne
-    private Order order;
+    private boolean attachedToOrder;
 
 }

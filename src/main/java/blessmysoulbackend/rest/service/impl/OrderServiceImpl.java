@@ -1,20 +1,33 @@
 package blessmysoulbackend.rest.service.impl;
 
+import blessmysoulbackend.rest.dao.CartItemDao;
 import blessmysoulbackend.rest.dao.OrderDao;
+import blessmysoulbackend.rest.dto.ItemDto;
 import blessmysoulbackend.rest.dto.OrderDto;
+import blessmysoulbackend.rest.model.CartItem;
+import blessmysoulbackend.rest.model.Item;
 import blessmysoulbackend.rest.model.Order;
+import blessmysoulbackend.rest.service.CartItemService;
 import blessmysoulbackend.rest.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service(value = "orderService")
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
-    OrderDao orderDao;
+    private OrderDao orderDao;
+
+    @Autowired
+    private CartItemDao cartItemDao;
+
+    @Autowired
+    private CartItemService cartItemService;
 
     public List<Order> findAll() {
         List<Order> orderList = new ArrayList<>();
@@ -28,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> findByUserId(Long id) {
+    public List<Order> findOrdersByUserID(Long id) {
         List<Order> orderList = new ArrayList<>();
         orderDao.findByOrderById().iterator().forEachRemaining(order -> {
             if (order.getUser().getId() == id)
@@ -44,22 +57,41 @@ public class OrderServiceImpl implements OrderService {
         newOrder.setNotes(order.getNotes());
         newOrder.setState(order.getState());
 
-        System.out.println("BEEP BEEP -------------- \n" +
-                "user: " + newOrder.getUser() + "\n" +
-                "cartItems: " + newOrder.getCartItems() + "\n" +
-                "notes: " + newOrder.getNotes() + "\n" +
-                "state: " + newOrder.getUser());
+        newOrder.getCartItems().forEach(cartItem -> {
+            cartItemService.attachToOrder(cartItem.getId());
+        });
 
-        newOrder.getCartItems().forEach(i -> i.setOrder(newOrder));
+        System.out.println("ORDER: " + newOrder.toString());
 
         orderDao.save(newOrder);
 
         return orderDao.save(newOrder);
     }
 
+    public Order update(long id, OrderDto order) {
+        Optional<Order> optionalItem = orderDao.findById(id);
+        if (optionalItem.isPresent()) {
+            Order existingOrder = optionalItem.get();
+            existingOrder.setUser(order.getUser());
+            existingOrder.setCartItems(order.getCartItems());
+            existingOrder.setNotes(order.getNotes());
+            existingOrder.setState(order.getState());
+
+            return orderDao.save(existingOrder);
+        } else {
+            return null;
+        }
+    }
+
     @Override
     public void delete(long id) {
         Order order = orderDao.findById(id).get();
+        List<CartItem> ciList = order.getCartItems();
+        order.setCartItems(Collections.emptyList());
+        ciList.forEach(cartItem -> {
+            CartItem _cartItem = cartItemDao.findById(cartItem.getId()).get();
+            cartItemDao.delete(_cartItem);
+        });
         orderDao.delete(order);
     }
 

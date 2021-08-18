@@ -3,7 +3,6 @@ package blessmysoulbackend.rest.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +27,7 @@ public class Order {
     @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany
     private List<CartItem> cartItems = new ArrayList<>();
 
     private String notes;

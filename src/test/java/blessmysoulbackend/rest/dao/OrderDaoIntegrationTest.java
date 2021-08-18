@@ -33,6 +33,9 @@ public class OrderDaoIntegrationTest {
 	
 	@Autowired
 	ItemDao itemDao;
+
+	@Autowired
+    CartItemDao cartItemDao;
 	
 	@Test
 	public void saveAnOrderWithItemsThenVerifySaved() {
@@ -48,12 +51,7 @@ public class OrderDaoIntegrationTest {
 		
 		log.info("User saved: " + user.toString());
 		org.junit.jupiter.api.Assertions.assertNotEquals(user.getId(), 0l);
-		
-		Order order = new Order();
-		order.setNotes("Test notes");
-		order.setState(OrderType.ORDER_RECEIVED);
-		order.setUser(user);
-		
+
 		Item item = new Item();
 		item.setDescription("A test item");
 		item.setName("TEST");
@@ -68,12 +66,22 @@ public class OrderDaoIntegrationTest {
 		cartItem.setItem(item);
 		cartItem.setQty(2f);
 		cartItem.setUser(user);
-		
+		cartItemDao.save(cartItem);
+
+		log.info("Saved cart item: " + cartItem.toString());
+
+		Order order = new Order();
+		order.setNotes("Test notes");
+		order.setState(OrderType.ORDER_RECEIVED);
 		order.getCartItems().add(cartItem);
 		orderDao.save(order);
-		
+
+		log.info("Saved order: " + order.toString());
+
 		org.junit.jupiter.api.Assertions.assertNotNull(order.getCartItems());
 		org.junit.jupiter.api.Assertions.assertEquals(1, order.getCartItems().size());
+
+
 	}
 	
 }

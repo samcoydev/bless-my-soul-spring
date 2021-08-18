@@ -8,11 +8,12 @@ import java.util.List;
 public interface OrderService {
 
     Order save(OrderDto order);
+    Order update(long id, OrderDto order);
     void delete(long id);
 
     List<Order> findAll();
 
     Order findById(Long id);
 
-    List<Order> findByUserId(Long id);
+    List<Order> findOrdersByUserID(Long id);
 }

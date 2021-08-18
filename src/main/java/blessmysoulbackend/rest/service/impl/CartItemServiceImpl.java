@@ -1,12 +1,9 @@
 package blessmysoulbackend.rest.service.impl;
 
-import blessmysoulbackend.rest.dao.CartDao;
-import blessmysoulbackend.rest.dto.CartDto;
-import blessmysoulbackend.rest.dto.ItemDto;
+import blessmysoulbackend.rest.dao.CartItemDao;
+import blessmysoulbackend.rest.dto.CartItemDto;
 import blessmysoulbackend.rest.model.CartItem;
-import blessmysoulbackend.rest.model.Item;
-import blessmysoulbackend.rest.model.Order;
-import blessmysoulbackend.rest.service.CartService;
+import blessmysoulbackend.rest.service.CartItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,16 +12,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Service(value = "cartService")
-public class CartServiceImpl implements CartService {
+public class CartItemServiceImpl implements CartItemService {
 
     @Autowired
-    CartDao cartDao;
+    CartItemDao cartItemDao;
 
     @Override
     public List<CartItem> findCartItemsByUserID(Long userID) {
         List<CartItem> cartItemList = new ArrayList<>();
-        cartDao.findByOrderById().iterator().forEachRemaining(cartItem -> {
-            if (cartItem.getUser().getId() == userID)
+        cartItemDao.findByOrderById().iterator().forEachRemaining(cartItem -> {
+            if (cartItem.getUser().getId() == userID && !cartItem.isAttachedToOrder())
                 cartItemList.add(cartItem);
         });
         return cartItemList;
@@ -33,8 +30,8 @@ public class CartServiceImpl implements CartService {
     @Override
     public List<CartItem> findCartItemsByItemID(Long itemID) {
         List<CartItem> cartItemList = new ArrayList<>();
-        cartDao.findByOrderById().iterator().forEachRemaining(cartItem -> {
-            if (cartItem.getItem().getId() == itemID)
+        cartItemDao.findByOrderById().iterator().forEachRemaining(cartItem -> {
+            if (cartItem.getItem().getId() == itemID && !cartItem.isAttachedToOrder())
                 cartItemList.add(cartItem);
         });
         return cartItemList;
@@ -46,24 +43,38 @@ public class CartServiceImpl implements CartService {
         return new ArrayList<>(itemIDFilteredList);
     }
 
-    public CartItem save(CartDto cartItem) {
+    public CartItem save(CartItemDto cartItem) {
         CartItem newCartItem = new CartItem();
         newCartItem.setItem(cartItem.getItem());
         newCartItem.setUser(cartItem.getUser());
         newCartItem.setQty(cartItem.getQty());
 
-        cartDao.save(newCartItem);
+        cartItemDao.save(newCartItem);
 
-        return cartDao.save(newCartItem);
+        return cartItemDao.save(newCartItem);
     }
 
     public CartItem updateQty(long id, float qtyIncrease) {
-        Optional<CartItem> optionalCartItem = cartDao.findById(id);
+        Optional<CartItem> optionalCartItem = cartItemDao.findById(id);
         if (optionalCartItem.isPresent()) {
             CartItem existingCartItem = optionalCartItem.get();
             existingCartItem.setQty(qtyIncrease);
 
-            return cartDao.save(existingCartItem);
+            return cartItemDao.save(existingCartItem);
+        } else {
+            return null;
+        }
+    }
+
+    public CartItem attachToOrder(long id) {
+        Optional<CartItem> optionalCartItem = cartItemDao.findById(id);
+        if (optionalCartItem.isPresent()) {
+            CartItem existingCartItem = optionalCartItem.get();
+            existingCartItem.setAttachedToOrder(true);
+
+            System.out.println("[CART] Setting item with id: " + id + " to TRUE.");
+
+            return cartItemDao.save(existingCartItem);
         } else {
             return null;
         }
@@ -71,8 +82,8 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void delete(long id) {
-        CartItem cartItem = cartDao.findById(id).get();
-        cartDao.delete(cartItem);
+        CartItem cartItem = cartItemDao.findById(id).get();
+        cartItemDao.delete(cartItem);
     }
 
 }

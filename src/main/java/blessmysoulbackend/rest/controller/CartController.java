@@ -1,12 +1,11 @@
 package blessmysoulbackend.rest.controller;
 
-import blessmysoulbackend.rest.dto.CartDto;
+import blessmysoulbackend.rest.dto.CartItemDto;
 import blessmysoulbackend.rest.model.CartItem;
-import blessmysoulbackend.rest.service.CartService;
+import blessmysoulbackend.rest.service.CartItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Table;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -16,34 +15,34 @@ import java.util.List;
 public class CartController {
 
     @Autowired
-    private CartService cartService;
+    private CartItemService cartItemService;
 
     @GetMapping("/{id}")
     public List<CartItem> getCartItemsByUserID(@PathVariable Long id) {
         System.out.println("[GET] All cart items for user with id: " + id);
-        return cartService.findCartItemsByUserID(id);
+        return cartItemService.findCartItemsByUserID(id);
     }
 
     @PostMapping
-    public CartItem saveCartItem(@Valid @RequestBody CartDto cartItem) {
+    public CartItem saveCartItem(@Valid @RequestBody CartItemDto cartItem) {
         System.out.println("[POST] Cart Item with an ID of: " + cartItem.getId());
-        List<CartItem> existingCartItems = cartService.findCartItemsWithSameUserIDAndItemID(cartItem.getUser().getId(), cartItem.getItem().getId());
+        List<CartItem> existingCartItems = cartItemService.findCartItemsWithSameUserIDAndItemID(cartItem.getUser().getId(), cartItem.getItem().getId());
         if (!existingCartItems.isEmpty()) {
             System.out.println("[POST] Cart Item already exists, increasing quantity by one: " + cartItem.getId());
-            return cartService.updateQty(existingCartItems.get(0).getId(), existingCartItems.get(0).getQty() + 1);
+            return cartItemService.updateQty(existingCartItems.get(0).getId(), existingCartItems.get(0).getQty() + 1);
         }
-        return cartService.save(cartItem);
+        return cartItemService.save(cartItem);
     }
 
     @PutMapping("/{id}")
-    public CartItem updateCartItem(@PathVariable Long id, @Valid @RequestBody CartDto cartItem) {
+    public CartItem updateCartItem(@PathVariable Long id, @Valid @RequestBody CartItemDto cartItem) {
         System.out.println("[PUT] Update Cart Item -NOTE: Server can only update an items quantity-: " + cartItem.getId());
-        return cartService.updateQty(id, cartItem.getQty());
+        return cartItemService.updateQty(id, cartItem.getQty());
     }
 
     @DeleteMapping("/{id}")
     public void deleteItem(@PathVariable Long id) {
         System.out.println("[DELETE] Cart Item: " + id);
-        cartService.delete(id);
+        cartItemService.delete(id);
     }
 }

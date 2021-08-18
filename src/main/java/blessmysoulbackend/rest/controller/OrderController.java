@@ -1,6 +1,8 @@
 package blessmysoulbackend.rest.controller;
 
+import blessmysoulbackend.rest.dto.ItemDto;
 import blessmysoulbackend.rest.dto.OrderDto;
+import blessmysoulbackend.rest.model.Item;
 import blessmysoulbackend.rest.model.Order;
 import blessmysoulbackend.rest.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +32,21 @@ public class OrderController {
     }
 
     @GetMapping("/user/{id}")
-    public List<Order> getOrdersByUserID(@PathVariable Long userID) {
-        System.out.println("[GET] Order with ID: " + userID);
-        return orderService.findByUserId(userID);
+    public List<Order> getOrdersByUserID(@PathVariable Long id) {
+        System.out.println("[GET] Order with ID: " + id);
+        return orderService.findOrdersByUserID(id);
     }
 
     @PostMapping
     public Order saveOrder(@Valid @RequestBody OrderDto order) {
         System.out.println("[POST] " + order.getId());
         return orderService.save(order);
+    }
+
+    @PutMapping("/{id}")
+    public Order updateOrder(@PathVariable Long id, @Valid @RequestBody OrderDto order) {
+        System.out.println("[PUT] Order with an id of: " + order.getId());
+        return orderService.update(id, order);
     }
 
     @DeleteMapping("/{id}")

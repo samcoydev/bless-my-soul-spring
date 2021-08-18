@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Set;
 
 @Repository
-public interface CartDao extends CrudRepository<CartItem, Long> {
+public interface CartItemDao extends CrudRepository<CartItem, Long> {
 
     Set<CartItem> findByOrderById();
 
