@@ -6,7 +6,6 @@ import blessmysoulbackend.rest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Table;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class UserController {
 
     @PostMapping(path = "/authenticate")
     public User authenticateUser(@Valid @RequestBody UserDto user) {
-        System.out.println("[POST] Authenticate User: " + user.getUsername());
+        System.out.println("[POST] Authenticate User: " + user.getEmail());
         return userService.authenticate(user);
     }
 

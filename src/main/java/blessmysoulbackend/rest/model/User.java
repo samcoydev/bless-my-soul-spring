@@ -1,7 +1,6 @@
 package blessmysoulbackend.rest.model;
 
 import blessmysoulbackend.rest.helpers.RoleType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,8 +14,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "username")
-    private String username;
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "password")
     private String password;
@@ -26,9 +25,6 @@ public class User {
 
     @Column(name = "lastname")
     private String lastname;
-
-    @Column(name = "email")
-    private String email;
 
     @Column(name = "role_type")
     private RoleType role;

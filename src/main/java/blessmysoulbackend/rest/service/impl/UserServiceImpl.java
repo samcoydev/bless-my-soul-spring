@@ -34,19 +34,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUsername(String username) {
-        return userDao.findByUsername(username).get();
+    public User findByEmail(String email) {
+        return userDao.findByEmail(email).get();
     }
 
     public User save(UserDto user) {
         User newUser = new User();
-        newUser.setUsername(user.getUsername());
+        newUser.setEmail(user.getEmail());
         if (StringUtils.isNotEmpty(user.getPassword())) {
             newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
         }
         newUser.setFirstname(user.getFirstname());
         newUser.setLastname(user.getLastname());
-        newUser.setEmail(user.getEmail());
         newUser.setRole(RoleType.USER);
 
         return userDao.save(newUser);
@@ -54,10 +53,10 @@ public class UserServiceImpl implements UserService {
 
     public User authenticate(UserDto user) {
         User userLoggingIn = new User();
-        userLoggingIn.setUsername(user.getUsername());
+        userLoggingIn.setEmail(user.getEmail());
         userLoggingIn.setPassword(user.getPassword());
 
-        User dbUser = findByUsername(userLoggingIn.getUsername());
+        User dbUser = findByEmail(userLoggingIn.getEmail());
         if(dbUser == null) {
             System.out.println("[AUTHENTICATE] Uh oh! something when wrong");
             return null;

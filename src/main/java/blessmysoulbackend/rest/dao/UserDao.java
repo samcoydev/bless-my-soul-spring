@@ -13,6 +13,6 @@ public interface UserDao extends CrudRepository<User, Long> {
     Set<User> findByOrderById();
 
     Optional<User> findById(Long id);
-    Optional<User> findByUsername(String username);
+    Optional<User> findByEmail(String email);
 
 }

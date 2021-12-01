@@ -1,7 +1,6 @@
 package blessmysoulbackend.rest.dto;
 
 import blessmysoulbackend.rest.helpers.RoleType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -11,8 +10,8 @@ public class UserDto {
 
     private long id;
 
-    @NotNull(message = "Username cannot be empty")
-    private String username;
+    @NotNull(message = "Email cannot be empty")
+    private String email;
 
     @NotNull(message = "Password cannot be empty")
     private String password;
@@ -22,9 +21,6 @@ public class UserDto {
 
     @NotNull(message = "Last name cannot be empty")
     private String lastname;
-
-    @NotNull(message = "Email cannot be empty")
-    private String email;
 
     private RoleType role;
 

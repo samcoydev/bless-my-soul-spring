@@ -46,7 +46,6 @@ public class OrderDaoIntegrationTest {
 		user.setLastname("Coy");
 		user.setPassword("password");
 		user.setRole(RoleType.ADMIN);
-		user.setUsername("ccoy");
 		userDao.save(user);
 		
 		log.info("User saved: " + user.toString());
