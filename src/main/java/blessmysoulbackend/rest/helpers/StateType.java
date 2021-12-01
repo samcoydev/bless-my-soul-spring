@@ -2,6 +2,7 @@ package blessmysoulbackend.rest.helpers;
 
 public enum StateType {
     DRAFT ("Draft"),
+    COMING_SOON ("Coming Soon"),
     POSTED ("Posted"),
     ARCHIVED ("Archived");
 
