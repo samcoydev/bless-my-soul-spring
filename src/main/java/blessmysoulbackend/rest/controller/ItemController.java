@@ -30,6 +30,12 @@ public class ItemController {
         return itemService.findById(id);
     }
 
+    @GetMapping("/by-category/{id}")
+    public List<Item> getItemsByCategoryID(@PathVariable Long id) {
+        System.out.println("[GET] Items with Category ID: " + id);
+        return itemService.findByCategoryID(id);
+    }
+
     @PostMapping
     public Item saveItem(@Valid @RequestBody ItemDto item) {
         System.out.println("[POST] " + item.getName());

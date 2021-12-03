@@ -1,7 +1,6 @@
 package blessmysoulbackend.rest.dto;
 
 import blessmysoulbackend.rest.model.Item;
-import blessmysoulbackend.rest.model.Order;
 import blessmysoulbackend.rest.model.User;
 import lombok.Data;
 

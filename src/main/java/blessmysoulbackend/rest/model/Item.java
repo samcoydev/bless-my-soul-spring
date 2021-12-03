@@ -23,7 +23,10 @@ public class Item {
     @Column(name = "description")
     private String description;
 
-    @Column(name="state")
+    @ManyToOne
+    private Category category;
+
+    @Column(name = "state")
     private StateType state;
 
 }
