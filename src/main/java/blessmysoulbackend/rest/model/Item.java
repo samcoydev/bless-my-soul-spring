@@ -1,6 +1,7 @@
 package blessmysoulbackend.rest.model;
 
 import blessmysoulbackend.rest.helpers.StateType;
+import javassist.bytecode.ByteArray;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -28,5 +29,9 @@ public class Item {
 
     @Column(name = "state")
     private StateType state;
+
+    @Lob
+    @Column(name="image")
+    private ByteArray image;
 
 }
