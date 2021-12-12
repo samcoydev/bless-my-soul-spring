@@ -7,6 +7,7 @@ import blessmysoulbackend.rest.model.Item;
 import blessmysoulbackend.rest.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ public class ItemServiceImpl implements ItemService {
     @Autowired
     ItemDao itemDao;
 
+    @Transactional
     public List<Item> findAll() {
         List<Item> itemList = new ArrayList<>();
         itemDao.findByOrderById().iterator().forEachRemaining(itemList::add);
@@ -25,11 +27,13 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    @Transactional
     public Item findById(Long id) {
         return itemDao.findById(id).get();
     }
 
     @Override
+    @Transactional
     public List<Item> findByCategoryID(long categoryId) {
         List<Item> itemList = new ArrayList<>();
         itemDao.findByOrderById().iterator().forEachRemaining(item -> {
@@ -39,6 +43,7 @@ public class ItemServiceImpl implements ItemService {
         return itemList;
     }
 
+    @Transactional
     public Item save(ItemDto item) {
         Item newItem = new Item();
         newItem.setName(item.getName());
