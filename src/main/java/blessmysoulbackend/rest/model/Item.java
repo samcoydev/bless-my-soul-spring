@@ -30,8 +30,7 @@ public class Item {
     @Column(name = "state")
     private StateType state;
 
-    @Lob
-    @Column(name="image")
-    private ByteArray image;
+    @ManyToOne
+    private Image image;
 
 }

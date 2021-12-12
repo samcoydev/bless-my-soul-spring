@@ -2,6 +2,7 @@ package blessmysoulbackend.rest.dto;
 
 import blessmysoulbackend.rest.helpers.StateType;
 import blessmysoulbackend.rest.model.Category;
+import blessmysoulbackend.rest.model.Image;
 import javassist.bytecode.ByteArray;
 import lombok.Data;
 
@@ -23,5 +24,5 @@ public class ItemDto {
 
     private StateType state;
 
-    private ByteArray image;
+    private Image image;
 }
