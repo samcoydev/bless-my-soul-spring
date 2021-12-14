@@ -13,13 +13,13 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @Service(value = "imageService")
 public class ImageServiceImpl implements ImageService {
 
     @Autowired
     ImageDao imageDao;
 
-    @Transactional
     public List<Image> findAll() {
         List<Image> imageList = new ArrayList<>();
         imageDao.findByOrderById().iterator().forEachRemaining(imageList::add);
