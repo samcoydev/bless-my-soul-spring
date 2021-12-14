@@ -1,6 +1,7 @@
 package blessmysoulbackend.rest.model;
 
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 

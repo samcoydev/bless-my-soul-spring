@@ -31,6 +31,7 @@ public class Item {
     private StateType state;
 
     @ManyToOne
+    @Lob
     private Image image;
 
 }

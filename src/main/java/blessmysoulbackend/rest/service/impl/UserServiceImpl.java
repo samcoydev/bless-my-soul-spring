@@ -9,10 +9,13 @@ import blessmysoulbackend.rest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
+@Transactional
 @Service(value = "userService")
 public class UserServiceImpl implements UserService {
 
