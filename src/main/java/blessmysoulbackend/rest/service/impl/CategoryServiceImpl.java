@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-@Transactional
+
 @Service(value = "categoryService")
 public class CategoryServiceImpl implements CategoryService {
 
