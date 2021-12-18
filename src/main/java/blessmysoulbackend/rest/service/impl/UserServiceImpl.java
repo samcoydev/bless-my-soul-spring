@@ -1,6 +1,7 @@
 package blessmysoulbackend.rest.service.impl;
 
 import blessmysoulbackend.rest.helpers.RoleType;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import blessmysoulbackend.rest.dao.UserDao;
 import blessmysoulbackend.rest.dto.UserDto;
@@ -14,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Slf4j
 @Transactional
 @Service(value = "userService")
 public class UserServiceImpl implements UserService {
@@ -61,15 +62,15 @@ public class UserServiceImpl implements UserService {
 
         User dbUser = findByEmail(userLoggingIn.getEmail());
         if(dbUser == null) {
-            System.out.println("[AUTHENTICATE] Uh oh! something when wrong");
+            log.info("[AUTHENTICATE] Uh oh! something when wrong");
             return null;
         }
 
         if(bcryptEncoder.matches(userLoggingIn.getPassword(), dbUser.getPassword())) {
-            System.out.println("[AUTHENTICATE] Passwords match!");
+            log.info("[AUTHENTICATE] Passwords match!");
             return dbUser;
         } else {
-            System.out.println("[AUTHENTICATE] Passwords don't match!");
+            log.info("[AUTHENTICATE] Passwords don't match!");
             return null;
         }
     }

@@ -1,5 +1,6 @@
 package blessmysoulbackend.rest.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.Filter;
@@ -11,11 +12,13 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Slf4j
 @Configuration
 public class CORSFilter implements Filter {
 
+
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-        System.out.println("Filtering on...........................................................");
+        log.debug("[CORSFILTER] Now filtering...");
         HttpServletResponse response = (HttpServletResponse) res;
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Credentials", "true");

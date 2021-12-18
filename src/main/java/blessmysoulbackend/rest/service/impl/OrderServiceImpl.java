@@ -63,8 +63,6 @@ public class OrderServiceImpl implements OrderService {
             cartItemService.attachToOrder(cartItem.getId());
         });
 
-        System.out.println("ORDER: " + newOrder.toString());
-
         orderDao.save(newOrder);
 
         return orderDao.save(newOrder);

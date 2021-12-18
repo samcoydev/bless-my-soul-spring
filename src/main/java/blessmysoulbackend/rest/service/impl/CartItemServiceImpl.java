@@ -4,6 +4,7 @@ import blessmysoulbackend.rest.dao.CartItemDao;
 import blessmysoulbackend.rest.dto.CartItemDto;
 import blessmysoulbackend.rest.model.CartItem;
 import blessmysoulbackend.rest.service.CartItemService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,8 +74,6 @@ public class CartItemServiceImpl implements CartItemService {
         if (optionalCartItem.isPresent()) {
             CartItem existingCartItem = optionalCartItem.get();
             existingCartItem.setAttachedToOrder(true);
-
-            System.out.println("[CART] Setting item with id: " + id + " to TRUE.");
 
             return cartItemDao.save(existingCartItem);
         } else {
