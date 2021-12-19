@@ -20,7 +20,7 @@ public class Order {
     @ManyToOne
     private User user;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<CartItem> cartItems = new ArrayList<>();
 
     private String notes;

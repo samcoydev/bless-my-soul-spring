@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 
+@Transactional
 @Service(value = "cartService")
 public class CartItemServiceImpl implements CartItemService {
 

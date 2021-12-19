@@ -21,7 +21,7 @@ public class CartController {
 
     @GetMapping("/{id}")
     public List<CartItem> getCartItemsByUserID(@PathVariable Long id) {
-        log.info("[GET] All cart items for user with id: " + id);
+        log.info("[GET] All Cart Items for User ID: " + id);
         return cartItemService.findCartItemsByUserID(id);
     }
 
