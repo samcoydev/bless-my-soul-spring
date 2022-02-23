@@ -8,6 +8,7 @@ import blessmysoulbackend.rest.dto.UserDto;
 import blessmysoulbackend.rest.model.User;
 import blessmysoulbackend.rest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +27,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder bcryptEncoder;
 
+    @Cacheable("users")
     public List<User> findAll() {
         List<User> list = new ArrayList<>();
         userDao.findByOrderById().iterator().forEachRemaining(list::add);

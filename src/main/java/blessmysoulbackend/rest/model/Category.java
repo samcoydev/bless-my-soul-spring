@@ -16,4 +16,11 @@ public class Category {
     @Column(name = "name")
     private String name;
 
+    @ManyToOne
+    @Lob
+    private Image image;
+
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private int sequence;
+
 }

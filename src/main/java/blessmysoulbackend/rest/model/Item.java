@@ -24,7 +24,7 @@ public class Item {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     private Category category;
 
     @Column(name = "state")

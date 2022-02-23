@@ -14,6 +14,6 @@ public interface ItemService {
     List<Item> findAll();
 
     Item findById(Long id);
-    List<Item> findByCategoryID(long categoryId);
+    List<Item> findByCategoryID(Long categoryId);
 
 }

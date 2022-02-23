@@ -1,5 +1,6 @@
 package blessmysoulbackend.rest.dto;
 
+import blessmysoulbackend.rest.model.Image;
 import lombok.Data;
 import javax.validation.constraints.NotNull;
 
@@ -11,4 +12,7 @@ public class CategoryDto {
     @NotNull(message="Name cannot be empty.")
     private String name;
 
+    private Image image;
+
+    private int sequence;
 }

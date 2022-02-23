@@ -4,7 +4,9 @@ import blessmysoulbackend.rest.dao.ItemDao;
 import blessmysoulbackend.rest.dto.ItemDto;
 import blessmysoulbackend.rest.model.Item;
 import blessmysoulbackend.rest.service.ItemService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Transactional
 @Service(value = "itemService")
 public class ItemServiceImpl implements ItemService {
@@ -19,6 +22,7 @@ public class ItemServiceImpl implements ItemService {
     @Autowired
     ItemDao itemDao;
 
+    @Cacheable("items")
     public List<Item> findAll() {
         List<Item> itemList = new ArrayList<>();
         itemDao.findByOrderById().iterator().forEachRemaining(itemList::add);
@@ -31,12 +35,17 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> findByCategoryID(long categoryId) {
+    public List<Item> findByCategoryID(Long categoryId) {
         List<Item> itemList = new ArrayList<>();
         itemDao.findByOrderById().iterator().forEachRemaining(item -> {
-            if (item.getCategory().getId() == categoryId)
-                itemList.add(item);
-        });
+                    if (item.getCategory() == null) {
+                        log.error("[ITEM] - Get by Category - Category was null!");
+                    } else {
+                        if (item.getCategory().getId() == categoryId)
+                            itemList.add(item);
+                    }
+                }
+        );
         return itemList;
     }
 
