@@ -31,6 +31,12 @@ public class CategoryController {
         return categoryService.findById(id);
     }
 
+    @GetMapping("/featured")
+    public List<Category> getFeaturedCategories() {
+        log.info("[GET] Featured Categories");
+        return categoryService.findFeatured();
+    }
+
     @PostMapping
     public Category saveCategory(@Valid @RequestBody CategoryDto category) {
         log.info("[POST] " + category.toString());

@@ -5,6 +5,7 @@ import blessmysoulbackend.rest.dto.CategoryDto;
 import blessmysoulbackend.rest.model.Category;
 import blessmysoulbackend.rest.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +22,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     CategoryDao categoryDao;
 
-    @Cacheable("categories")
+    @CachePut(value="categories")
     public List<Category> findAll() {
         List<Category> categoryList = new ArrayList<>();
         categoryDao.findByOrderById().iterator().forEachRemaining(categoryList::add);
@@ -33,10 +34,22 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryDao.findById(id).get();
     }
 
+    public List<Category> findFeatured() {
+        List<Category> categoryList = new ArrayList<>();
+        categoryDao.findByOrderById().iterator().forEachRemaining(category -> {
+            if (category.isFeaturedCategory()) {
+                categoryList.add(category);
+            }
+        });
+        return categoryList;
+    }
+
     public Category save(CategoryDto category) {
         Category newCategory = new Category();
         newCategory.setName(category.getName());
         newCategory.setImage(category.getImage());
+        newCategory.setAllProducts(category.getAllProducts());
+        newCategory.setFeaturedCategory(category.getIsFeaturedCategory());
 
         categoryDao.save(newCategory);
         return categoryDao.save(newCategory);
@@ -49,6 +62,8 @@ public class CategoryServiceImpl implements CategoryService {
             existingCategory.setName(category.getName());
             existingCategory.setImage(category.getImage());
             existingCategory.setSequence(category.getSequence());
+            existingCategory.setAllProducts(category.getAllProducts());
+            existingCategory.setFeaturedCategory(category.getIsFeaturedCategory());
 
             return categoryDao.save(existingCategory);
         } else {

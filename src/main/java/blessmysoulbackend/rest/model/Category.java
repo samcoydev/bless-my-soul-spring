@@ -1,6 +1,7 @@
 package blessmysoulbackend.rest.model;
 
 import lombok.Data;
+import lombok.Getter;
 
 import javax.persistence.*;
 
@@ -22,5 +23,9 @@ public class Category {
 
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int sequence;
+
+    private boolean allProducts;
+
+    private boolean isFeaturedCategory;
 
 }

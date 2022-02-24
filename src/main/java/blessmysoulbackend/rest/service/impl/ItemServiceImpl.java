@@ -6,6 +6,7 @@ import blessmysoulbackend.rest.model.Item;
 import blessmysoulbackend.rest.service.ItemService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +23,7 @@ public class ItemServiceImpl implements ItemService {
     @Autowired
     ItemDao itemDao;
 
-    @Cacheable("items")
+    @CachePut("items")
     public List<Item> findAll() {
         List<Item> itemList = new ArrayList<>();
         itemDao.findByOrderById().iterator().forEachRemaining(itemList::add);
