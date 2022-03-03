@@ -5,8 +5,6 @@ import blessmysoulbackend.rest.model.Item;
 import blessmysoulbackend.rest.service.ItemService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,7 +22,19 @@ public class ItemController {
     @GetMapping
     public List<Item> getAllItems() {
         log.info("[GET] All Items");
-        return itemService.findAll();
+        return itemService.findAllExcludingIsDeleted();
+    }
+
+    @GetMapping("/newest")
+    public List<Item> getNewestItems() {
+        log.info("[GET] Newest Items");
+        return itemService.findNewestItems();
+    }
+
+    @GetMapping("/featured")
+    public List<Item> getFeaturedItems() {
+        log.info("[GET] Featured Items");
+        return itemService.findFeaturedItems();
     }
 
     @GetMapping("/{id}")

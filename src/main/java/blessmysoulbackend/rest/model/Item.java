@@ -1,8 +1,8 @@
 package blessmysoulbackend.rest.model;
 
 import blessmysoulbackend.rest.helpers.StateType;
-import javassist.bytecode.ByteArray;
 import lombok.Data;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
@@ -29,6 +29,12 @@ public class Item {
 
     @Column(name = "state")
     private StateType state;
+
+    @Column(name = "is_deleted")
+    private boolean isDeleted;
+
+    @Column(name = "is_featured")
+    private boolean isFeatured;
 
     @ManyToOne
     @Lob

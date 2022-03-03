@@ -9,9 +9,12 @@ public interface ItemService {
 
     Item save(ItemDto item);
     Item update(long id, ItemDto item);
-    void delete(long id);
+    void delete(Long id);
 
     List<Item> findAll();
+    List<Item> findAllExcludingIsDeleted();
+    List<Item> findNewestItems();
+    List<Item> findFeaturedItems();
 
     Item findById(Long id);
     List<Item> findByCategoryID(Long categoryId);

@@ -1,5 +1,6 @@
 package blessmysoulbackend.rest.service.impl;
 
+import blessmysoulbackend.rest.dao.CartItemDao;
 import blessmysoulbackend.rest.dao.ItemDao;
 import blessmysoulbackend.rest.dto.ItemDto;
 import blessmysoulbackend.rest.model.Item;
@@ -7,7 +8,6 @@ import blessmysoulbackend.rest.service.ItemService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,10 +23,31 @@ public class ItemServiceImpl implements ItemService {
     @Autowired
     ItemDao itemDao;
 
+    @Autowired
+    CartItemDao cartItemDao;
+
     @CachePut("items")
     public List<Item> findAll() {
         List<Item> itemList = new ArrayList<>();
         itemDao.findByOrderById().iterator().forEachRemaining(itemList::add);
+        return itemList;
+    }
+
+    public List<Item> findAllExcludingIsDeleted() {
+        List<Item> itemList = new ArrayList<>();
+        itemDao.findByIsDeletedFalse().iterator().forEachRemaining(itemList::add);
+        return itemList;
+    }
+
+    public List<Item> findFeaturedItems() {
+        List<Item> itemList = new ArrayList<>();
+        itemDao.findByIsFeaturedTrueAndIsDeletedFalse().iterator().forEachRemaining(itemList::add);
+        return itemList;
+    }
+
+    public List<Item> findNewestItems() {
+        List<Item> itemList = new ArrayList<>();
+        itemDao.findTop4ByOrderByIdDescAndIsDeletedFalse().iterator().forEachRemaining(itemList::add);
         return itemList;
     }
 
@@ -39,13 +60,9 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> findByCategoryID(Long categoryId) {
         List<Item> itemList = new ArrayList<>();
         itemDao.findByOrderById().iterator().forEachRemaining(item -> {
-                    if (item.getCategory() == null) {
-                        log.error("[ITEM] - Get by Category - Category was null!");
-                    } else {
-                        if (item.getCategory().getId() == categoryId)
-                            itemList.add(item);
-                    }
-                }
+                if (item.getCategory().getId() == categoryId)
+                    itemList.add(item);
+            }
         );
         return itemList;
     }
@@ -57,6 +74,8 @@ public class ItemServiceImpl implements ItemService {
         newItem.setDescription(item.getDescription());
         newItem.setCategory(item.getCategory());
         newItem.setState(item.getState());
+        newItem.setFeatured(item.isFeatured());
+        newItem.setDeleted(item.isDeleted());
         newItem.setImage(item.getImage());
 
         itemDao.save(newItem);
@@ -72,7 +91,9 @@ public class ItemServiceImpl implements ItemService {
             existingItem.setPrice(item.getPrice());
             existingItem.setDescription(item.getDescription());
             existingItem.setCategory(item.getCategory());
-            existingItem.setState(item.getState());
+            existingItem.setState(item.getState());;
+            existingItem.setFeatured(item.isFeatured());
+            existingItem.setDeleted(item.isDeleted());
             existingItem.setImage(item.getImage());
 
             return itemDao.save(existingItem);
@@ -82,9 +103,10 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(Long id) {
         Item item = itemDao.findById(id).get();
-        itemDao.delete(item);
+        item.setDeleted(true);
+        // For Hard Delete (BROKEN) - itemDao.delete(item);
     }
 
 }
