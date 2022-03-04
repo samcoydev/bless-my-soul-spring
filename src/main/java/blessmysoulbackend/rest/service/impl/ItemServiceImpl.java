@@ -59,11 +59,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<Item> findByCategoryID(Long categoryId) {
         List<Item> itemList = new ArrayList<>();
-        itemDao.findByOrderById().iterator().forEachRemaining(item -> {
-                if (item.getCategory().getId() == categoryId)
-                    itemList.add(item);
-            }
-        );
+        itemDao.findByCategoryIdAndIsDeletedFalse(categoryId).iterator().forEachRemaining(itemList::add);
         return itemList;
     }
 

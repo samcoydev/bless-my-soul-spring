@@ -13,6 +13,8 @@ public interface ItemDao extends CrudRepository<Item, Long> {
 
     List<Item> findByOrderById();
 
+    List<Item> findByCategoryIdAndIsDeletedFalse(Long id);
+
     List<Item> findByIsDeletedFalse();
 
     @Query(value = "SELECT * FROM items item WHERE item.is_deleted = false ORDER BY item.id DESC LIMIT 4", nativeQuery = true)
