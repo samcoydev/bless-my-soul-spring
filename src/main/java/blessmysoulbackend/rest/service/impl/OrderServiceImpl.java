@@ -43,10 +43,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> findOrdersByUserID(Long id) {
         List<Order> orderList = new ArrayList<>();
-        orderDao.findByOrderById().iterator().forEachRemaining(order -> {
-            if (order.getUser().getId() == id)
-                orderList.add(order);
-        });
+        orderDao.findByUserId(id).iterator().forEachRemaining(orderList::add);
         return orderList;
     }
 

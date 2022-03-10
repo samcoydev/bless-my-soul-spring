@@ -11,6 +11,7 @@ import java.util.Optional;
 public interface OrderDao extends CrudRepository<Order, Long> {
 
     List<Order> findByOrderById();
+    List<Order> findByUserId(Long id);
 
     Optional<Order> findById(Long id);
 }
