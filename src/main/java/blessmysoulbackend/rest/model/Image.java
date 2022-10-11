@@ -1,5 +1,6 @@
 package blessmysoulbackend.rest.model;
 
+import blessmysoulbackend.rest.helpers.ImageType;
 import lombok.Data;
 import org.hibernate.annotations.Type;
 
@@ -16,9 +17,8 @@ public class Image {
 
     private String name;
 
-    private String type;
+    private ImageType type;
 
-    @Lob
-    private byte[] data;
+    private String url;
 
 }

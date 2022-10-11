@@ -30,8 +30,8 @@ public class ImageController {
     @PostMapping
     public ResponseEntity<Image> saveImage(@Valid @RequestBody MultipartFile image) {
         log.info("[POST] NEW IMAGE: ");
-        if (!image.getContentType().equals("image/jpeg")) {
-            log.info("[ERROR] TRIED TO POST A NON-JPEG FILE!");
+        if (!image.getContentType().equals("image/jpeg") && !image.getContentType().equals("image/png")) {
+            log.error("Did not receive an image.");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(imageService.save(image));
