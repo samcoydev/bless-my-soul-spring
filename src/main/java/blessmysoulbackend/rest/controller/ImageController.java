@@ -1,6 +1,10 @@
 package blessmysoulbackend.rest.controller;
 
+import blessmysoulbackend.rest.dto.ImageUploadDto;
+import blessmysoulbackend.rest.dto.ItemDto;
 import blessmysoulbackend.rest.model.Image;
+import blessmysoulbackend.rest.model.ImageUpload;
+import blessmysoulbackend.rest.model.Item;
 import blessmysoulbackend.rest.service.ImageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +32,39 @@ public class ImageController {
     }
 
     @PostMapping
-    public ResponseEntity<Image> saveImage(@Valid @RequestBody MultipartFile image) {
-        log.info("[POST] NEW IMAGE: ");
-        if (!image.getContentType().equals("image/jpeg") && !image.getContentType().equals("image/png")) {
-            log.error("Did not receive an image.");
+    public ResponseEntity<Image> saveImage(@Valid @ModelAttribute ImageUploadDto imageUpload) {
+        log.info("[POST] NEW IMAGE: " + imageUpload);
+
+        MultipartFile imageFile = imageUpload.getImage();
+        if (imageFile == null || checkIfNotImage(imageFile))
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(imageService.save(imageUpload));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Image> updateItem(@PathVariable long id, @Valid @RequestBody ImageUploadDto imageUpload) {
+        log.info("[PUT] Image: " + imageUpload.getName());
+
+        MultipartFile imageFile = imageUpload.getImage();
+        if (imageFile != null && checkIfNotImage(imageFile))
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(imageService.update(id, imageUpload));
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteImage(@PathVariable long id) {
+        log.info("[DELETE] Image with ID: " + id);
+        imageService.delete(id);
+    }
+
+    public boolean checkIfNotImage(MultipartFile file) {
+        if (!file.getContentType().equals("image/jpeg") && !file.getContentType().equals("image/png")) {
+            log.error("Did not receive an image.");
+            return true;
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(imageService.save(image));
+        return false;
     }
 
 }
