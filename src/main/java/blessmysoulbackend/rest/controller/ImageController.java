@@ -61,7 +61,7 @@ public class ImageController {
 
     public boolean checkIfNotImage(MultipartFile file) {
         if (!file.getContentType().equals("image/jpeg") && !file.getContentType().equals("image/png")) {
-            log.error("Did not receive an image.");
+            log.error("Did not receive an image. Content type was " + file.getContentType());
             return true;
         }
         return false;
