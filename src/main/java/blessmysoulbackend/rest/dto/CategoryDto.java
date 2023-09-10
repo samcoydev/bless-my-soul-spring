@@ -2,7 +2,6 @@ package blessmysoulbackend.rest.dto;
 
 import blessmysoulbackend.rest.model.Image;
 import lombok.Data;
-import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
 
