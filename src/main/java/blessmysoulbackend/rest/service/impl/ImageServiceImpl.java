@@ -36,7 +36,7 @@ public class ImageServiceImpl implements ImageService {
     @Autowired
     private MinioService minioService;
 
-    @Value("${spring.minio.url}/${spring.minio.bucket}")
+    @Value("${PUBLIC_IMAGE_URL}/${spring.minio.bucket}")
     private String minioBucketPath;
 
     public List<Image> findAll() {
